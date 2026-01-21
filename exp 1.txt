@@ -1,0 +1,27 @@
+1. create a table st_info with attributes prn, name, m1, m2, m3
+create table st_info (prn int, name varchar2(20),m1 number, m2 number, m3 number);
+
+select * from tab;           # To know about how many tables are there
+
+select * from st_info        # To check the information is present in the table or view the table data in the table
+
+2. insert at least 10 rows in the table
+insert into st_info (prn, name, m1,m2,m3) values (101,'Anish',40,40,40);
+insert into st_info (prn, name, m1,m2,m3) values (102,'Aswin',40,20,30);
+insert into st_info (prn, name, m1,m2,m3) values (103,'Jash',40,35,20);
+insert into st_info (prn, name, m1,m2,m3) values (104,'Manthan',0,10,25);
+insert into st_info (prn, name, m1,m2,m3) values (105,'Lakshya',30,21,33);
+insert into st_info (prn, name, m1,m2,m3) values (106,'Meet',0,5,15);
+insert into st_info (prn, name, m1,m2,m3) values (107,'Varun',20,25,15);
+insert into st_info (prn, name, m1,m2,m3) values (108,'Mohit',12,40,22);
+insert into st_info (prn, name, m1,m2,m3) values (109,'Raj',22,33,23);
+insert into st_info (prn, name, m1,m2,m3) values (110,'Sam',10,5,10);
+
+
+3. add attribute total and perc to the table
+alter table st_info add total number;
+alter table st_info add prec number;
+
+4. calculate total & prec
+update st_info set total = m1+m2+m3;
+update st_info set prec = (total/300)*100;
