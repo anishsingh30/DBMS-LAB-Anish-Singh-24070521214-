@@ -1,0 +1,85 @@
+alter table department modify building varchar2(30) not null;
+alter table department modify building varchar2(30);
+
+.how to rename the field name:
+alter table table_name rename field into field_name;
+
+.check both the tables i.e instructor and department
+select * from department;
+select * from instructor;
+
+4.Increase the salary of each instructor in the Com. Sci. department by 10%;
+-> update instructor set salary = salary + salary * .1 where dept_id = (select dept_id from department where name = 'Computer Science');
+
+.update instructor set salary = salary + salary * .2 where dept_id = (select dept_id from department where name = 'History');
+-> '0' rows updated because there is no instructor for history
+
+5.update instructor set salary = salary + salary * 5/100 where salary < 80000;
+
+.condition is salary is above 80000 but below 85000 deduce 5%
+update instructor set salary = salary - salary * 5/100 where salary < 80000 and salary > 85000;
+
+.create a new course "CS-001", titled "Weekly Seminar", with 1 credits.
+desc course;
+select * from course;
+insert into course (course_id, title, dept_id, credits) values ('CS-001', 'Weekly Seminar', 1, 1);
+
+.create a section of this course in fall 2017, with sec_id of 1, and with the location of this section not yet specified.
+INSERT INTO section (section_id,course_id, sec_id, semester, year) VALUES (8,'CS-001', 1, 'Fall', 2017);
+
+To delete tuple:
+delete from table where condition;
+
+
+
+.to create a sequence
+
+->create sequence emp_seq start with 1 increment by 1;
+
+.now create table:
+->create table emp (emp_id int primary key, name varchar2(20), mobile int);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz1', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz2', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz3', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz4', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz5', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz6', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz7', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz8', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz9', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz10', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz11', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp_seq.nextval,'xyz12', 8828393454);
+
+.select max(emp_id) from emp;
+->to check the max values/input in emp of emp_id
+
+.drop sequence emp_seq;
+->to drop the sequence
+
+create sequence emp1 start with 14 increment by 1;
+
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz1', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz2', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz3', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz4', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz5', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz6', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz7', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz8', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz9', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz10', 8828393454);
+insert into emp (emp_id, name, mobile) values (emp1.nextval,'xyz11', 8828393454);
+
+
+to rename the table: rename emp to employee;
+to rename the table: alter table employee rename column mobile to mobilenumber;
+
+ALTER TABLE employee ADD pincode number NOT NULL;
+
+truncate table employee;
+select * from employee;
+
+ALTER TABLE employee ADD pincode number NOT NULL;
