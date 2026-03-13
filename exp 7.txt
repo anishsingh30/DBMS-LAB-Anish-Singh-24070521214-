@@ -1,0 +1,75 @@
+ EXP 7 
+1. SUM OF FIRST n NUMBERS USING LOOPS
+# Procedure to calculate sum of first n numbers using WHILE loop
+
+CREATE OR REPLACE PROCEDURE SumFirst_n_Numbers_WhileLoop(
+n IN NUMBER)
+AS
+    i NUMBER := 1;
+    sum1 NUMBER := 0;
+BEGIN
+    WHILE i <= n LOOP
+        sum1 := sum1 + i;
+        i := i + 1;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Sum of first n numbers using WHILE loop: ' || sum1);
+END;
+/
+
+SET SERVEROUTPUT ON;
+EXEC SumFirst_n_Numbers_WhileLoop(10);
+
+2. SUM OF FIRST n NUMBERS USING WHILE LOOP WITH EXIT
+# Procedure using EXIT condition inside the loop
+
+CREATE OR REPLACE PROCEDURE SumFirst_n_Numbers_While(
+n IN NUMBER)
+AS
+    i NUMBER := 1;
+    sum1 NUMBER := 0;
+BEGIN
+    WHILE i != 0 LOOP
+        sum1 := sum1 + i;
+        EXIT WHEN i = n;
+        i := i + 1;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum of first n numbers using WHILE loop: ' || sum1);
+END;
+/
+
+EXEC SumFirst_n_Numbers_While(10);
+
+3. SUM OF FIRST n NUMBERS USING FOR LOOP
+# Procedure to calculate sum using FOR loop
+
+CREATE OR REPLACE PROCEDURE SumFirst_n_Numbers_ForLoop(
+n IN NUMBER)
+AS
+    sum1 NUMBER := 0;
+BEGIN
+    FOR i IN 1..n LOOP
+        sum1 := sum1 + i;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum of first n numbers using FOR loop: ' || sum1);
+END;
+/
+EXEC SumFirst_n_Numbers_ForLoop(10);
+
+
+4. SUM USING REVERSE FOR LOOP
+# Using REVERSE keyword to run the loop from n to 1
+
+CREATE OR REPLACE PROCEDURE SumFirst_n_Numbers_ForLoop(
+n IN NUMBER)
+AS
+    sum1 NUMBER := 0;
+BEGIN
+    FOR i REVERSE IN 1..n LOOP
+        sum1 := sum1 + i;
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Sum of first n numbers using FOR loop: ' || sum1);
+END;
+/
