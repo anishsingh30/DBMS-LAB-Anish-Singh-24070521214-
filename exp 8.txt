@@ -1,0 +1,96 @@
+PRACTICAL 8 CONDITIONAL STATEMENTS
+IF – ELSE IF – ELSE condition
+
+CREATE OR REPLACE PROCEDURE FindGreatest AS
+  a NUMBER := 5;
+  b NUMBER := 15;
+  c NUMBER := 10;
+BEGIN
+  IF a > b AND a > c THEN
+    DBMS_OUTPUT.PUT_LINE('A is greatest: ' || a);
+
+  ELSIF b > a AND b > c THEN
+    DBMS_OUTPUT.PUT_LINE('B is greatest: ' || b);
+
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('C is greatest: ' || c);
+  END IF;
+END;
+/
+
+EXEC FindGreatest;
+
+
+CASE 1 : Procedure with fixed marks
+CREATE OR REPLACE PROCEDURE Stud_Result
+AS 
+  CS NUMBER := 45;       
+  OS NUMBER := 75;       
+  DBMS NUMBER := 0;      
+  MATH NUMBER := 25;     
+  total NUMBER;
+  per NUMBER;
+BEGIN 
+  total := CS + OS + DBMS + MATH;       
+  per := (total / 400) * 100;           
+  IF CS < 35 AND OS < 35 AND DBMS < 35 AND MATH < 35 THEN
+    DBMS_OUTPUT.PUT_LINE('FAIL');
+  ELSE
+    # determine division based on percentage
+    IF per > 75 THEN
+       DBMS_OUTPUT.PUT_LINE('DIVISION A');
+    ELSIF per > 65 THEN
+       DBMS_OUTPUT.PUT_LINE('DIVISION B');
+    ELSIF per > 55 THEN
+       DBMS_OUTPUT.PUT_LINE('SECONDARY DIVISION');
+    ELSE
+       DBMS_OUTPUT.PUT_LINE('THIRD DIVISION');
+    END IF;
+    DBMS_OUTPUT.PUT_LINE('TOTAL MARKS: ' || total);
+    DBMS_OUTPUT.PUT_LINE('PERCENTAGE: ' || per);
+  END IF;
+END;
+/
+
+SET SERVEROUTPUT ON;
+
+execute CASE 1
+EXEC Stud_Result;
+
+
+CASE 2 : Procedure with CS as input, others fixed
+CREATE OR REPLACE PROCEDURE Stud_Result_CS_Input(p_CS IN NUMBER)
+AS 
+  OS NUMBER := 75;      
+  DBMS NUMBER := 0;     
+  MATH NUMBER := 25;    
+  total NUMBER;
+  per NUMBER;
+BEGIN 
+  total := p_CS + OS + DBMS + MATH;       
+  per := (total / 400) * 100;             
+
+  # check for fail
+  IF p_CS < 35 OR OS < 35 OR DBMS < 35 OR MATH < 35 THEN
+    DBMS_OUTPUT.PUT_LINE('FAIL');
+  ELSE
+    # determine division based on percentage
+    IF per > 75 THEN
+       DBMS_OUTPUT.PUT_LINE('DIVISION A');
+    ELSIF per > 65 THEN
+       DBMS_OUTPUT.PUT_LINE('DIVISION B');
+    ELSIF per > 55 THEN
+       DBMS_OUTPUT.PUT_LINE('SECONDARY DIVISION');
+    ELSE
+       DBMS_OUTPUT.PUT_LINE('THIRD DIVISION');
+    END IF;
+
+    DBMS_OUTPUT.PUT_LINE('TOTAL MARKS: ' || total);
+    DBMS_OUTPUT.PUT_LINE('PERCENTAGE: ' || per);
+  END IF;
+END;
+/
+
+SET SERVEROUTPUT ON;
+Execute CASE 2 with CS input = 60
+EXEC Stud_Result_CS_Input(60);
