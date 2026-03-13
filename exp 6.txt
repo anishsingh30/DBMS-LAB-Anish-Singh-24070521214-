@@ -1,0 +1,54 @@
+set serveroutput ON
+
+-> Create procedure Hello1
+as
+Begin
+DBMS_OUTPUT.PUT_line('Hello World');
+END;
+/
+
+# hello world program using procedures 
+-> create procedure hello_world
+AS
+Begin
+      DBMS_OUTPUT.PUT_LINE('Hello World');
+END;
+/
+
+#Now to execute above program
+-> EXEC hello_world
+-> execute hello_world;
+
+#Add 'welcome to sit' after 'Hello World'
+->create or replace procedure hello_world
+AS
+Begin
+      DBMS_OUTPUT.PUT_LINE('Hello World, Welcome to SIT');
+END;
+/
+
+
+#taking your own input and adding
+CREATE OR REPLACE PROCEDURE add_numbers
+(    num1 IN number, num2 IN number)
+as
+BEGIN 
+    DBMS_OUTPUT.PUT_LINE('Result : ' || (num1+num2) );
+END;
+/
+
+#adding two numbers
+CREATE OR REPLACE PROCEDURE add_numbers
+    AS
+        num1 number := 5;
+        num2 number := 10;
+        res number;
+    BEGIN
+        res:= NUM1 + NUM2;
+        DBMS_OUTPUT.PUT_LINE('result: ' || res);
+    END;
+   /
+ 
+
+
+
