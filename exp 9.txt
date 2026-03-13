@@ -1,0 +1,163 @@
+CREATE TABLE st_info (
+    roll NUMBER,
+    name VARCHAR2(30),
+    sub1 NUMBER,
+    sub2 NUMBER,
+    sub3 NUMBER,
+    sub4 NUMBER,
+    total NUMBER,
+    perc NUMBER(5,2),
+    result VARCHAR2(10)
+);
+
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (1,'Amit',75,68,70,80,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (2,'Rahul',60,65,58,72,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (3,'Priya',82,78,85,80,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (4,'Neha',55,60,62,58,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (5,'Rohit',45,50,48,52,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (6,'Anita',90,88,92,85,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (7,'Karan',70,72,68,75,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (8,'Sneha',65,60,67,63,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (9,'Vikas',50,55,60,58,NULL,NULL,NULL);
+
+INSERT INTO st_info (roll, name, sub1, sub2, sub3, sub4, total, perc, result)
+VALUES (10,'Pooja',78,82,80,76,NULL,NULL,NULL);
+
+PROCEDURE TO DISPLAY THE CONTENT OF THE TABLE: ST_INFO
+
+# procedure to handle tables:-
+=> procedure to display the content of the table: st_info
+create or replace procedure show_st
+as
+s_roll st_info.roll%type;
+s_name st_info.name%type;
+s_sub1 st_info.sub1%type;
+s_sub2 st_info.sub2%type;
+s_sub3 st_info.sub3%type;
+s_sub4 st_info.sub4%type;
+
+begin
+	select roll, name, sub1, sub2, sub3, sub4 into
+	s_roll, s_name, s_sub1, s_sub2, s_sub3, s_sub4 from st_info;
+	dbms_output.put_line('Roll No : ' || s_roll);
+	dbms_output.put_line('Name of the student : ' || s_name);
+	dbms_output.put_line('Marks of Sub1 : ' || s_sub1);
+	dbms_output.put_line('Marks of Sub2 : ' || s_sub2);
+	dbms_output.put_line('Marks of Sub3 : ' || s_sub3);
+	dbms_output.put_line('Marks of Sub4 : ' || s_sub4);
+end;
+/
+
+
+
+
+create or replace procedure show_st ( rno number)
+as
+s_roll st_info.roll%type;
+s_name st_info.name%type;
+s_sub1 st_info.sub1%type;
+s_sub2 st_info.sub2%type;
+s_sub3 st_info.sub3%type;
+s_sub4 st_info.sub4%type;
+
+begin
+	select roll, name, sub1, sub2, sub3, sub4 into
+	s_roll, s_name, s_sub1, s_sub2, s_sub3, s_sub4 from st_info where roll = rno;
+	dbms_output.put_line('Roll No : ' || s_roll);
+	dbms_output.put_line('Name of the student : ' || s_name);
+	dbms_output.put_line('Marks of Sub1 : ' || s_sub1);
+	dbms_output.put_line('Marks of Sub2 : ' || s_sub2);
+	dbms_output.put_line('Marks of Sub3 : ' || s_sub3);
+	dbms_output.put_line('Marks of Sub4 : ' || s_sub4);
+end;
+/
+
+
+
+
+
+set serveroutput on
+create or replace procedure show_st(rno number)
+as
+s_roll st_info.roll%type;
+s_name st_info.name%type;
+s_sub1 st_info.sub1%type;
+s_sub2 st_info.sub2%type;
+s_sub3 st_info.sub3%type;
+s_sub4 st_info.sub4%type;
+s_total number;
+s_perc st_info.perc%type;
+s_result st_info.result%type;
+
+begin
+    select roll, name, sub1, sub2, sub3, sub4
+    into s_roll, s_name, s_sub1, s_sub2, s_sub3, s_sub4
+    from st_info
+    where roll = rno;
+
+    s_total := s_sub1 + s_sub2 + s_sub3 + s_sub4;
+    s_perc := s_total / 4;
+
+    dbms_output.put_line('Roll No : ' || s_roll);
+    dbms_output.put_line('Name of the student : ' || s_name);
+    dbms_output.put_line('Marks of Sub1 : ' || s_sub1);
+    dbms_output.put_line('Marks of Sub2 : ' || s_sub2);
+    dbms_output.put_line('Marks of Sub3 : ' || s_sub3);
+    dbms_output.put_line('Marks of Sub4 : ' || s_sub4);
+    dbms_output.put_line('Total Marks : ' || s_total);
+    dbms_output.put_line('Percentage : ' || s_perc);
+
+    if s_sub1 >= 50 and s_sub2 >= 50 and s_sub3 >= 50 and s_sub4 >= 50 then
+        s_result := 'PASS';
+    else
+        s_result := 'FAIL';
+    end if;
+
+    dbms_output.put_line('Result : ' || s_result);
+
+    update st_info
+    set total = s_total,
+        perc = s_perc,
+        result = s_result
+    where roll = rno;
+
+end;
+/ 
+
+-------------output---------------
+exec show_st(1)
+Roll No : 1
+Name of the student : Amit
+Marks of Sub1 : 75
+Marks of Sub2 : 68
+Marks of Sub3 : 70
+Marks of Sub4 : 80
+Total Marks : 293
+Percentage : 73.25
+Result : PASS
+
+procedure successfully completed.
+table got updated
+
+-------------output---------------
+
+
+
