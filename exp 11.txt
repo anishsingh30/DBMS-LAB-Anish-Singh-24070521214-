@@ -1,0 +1,25 @@
+CREATE OR REPLACE FUNCTION square1 (n IN NUMBER)
+RETURN NUMBER
+AS
+    square NUMBER;
+BEGIN
+    square := n * n;
+    DBMS_OUTPUT.PUT_LINE('Square of ' || n || ' = ' || square);
+    RETURN square;
+END;
+/
+--------------------OUTPUT----------------------
+EXEC DBMS_OUTPUT.PUT_LINE(Square1(4));
+16
+
+PL/SQL procedure successfully completed.
+
+
+select square1(10) from dual;
+
+SQUARE1(10)
+-----------
+        100
+
+Square of 10 = 100
+------------------------------------------------

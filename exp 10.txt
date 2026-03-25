@@ -1,0 +1,121 @@
+NO DATA_FOUND
+
+
+CREATE OR REPLACE PROCEDURE ndf (n IN NUMBER)
+AS
+    vname   employees.emp_name%TYPE;
+    vsalary employees.salary%TYPE;
+BEGIN
+    SELECT emp_name, salary
+    INTO vname, vsalary
+    FROM employees
+    WHERE emp_id = n;
+
+    DBMS_OUTPUT.PUT_LINE('Name = ' || vname || ', Salary = ' || vsalary);
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('emp_id = ' || n || ' not found');
+END;
+/
+
+
+--------------------OUTPUT---------------------------
+exec ndf(3)
+
+Name = Robert, Salary = 4000
+
+PL/SQL procedure successfully completed.
+-----------------------------------------------------
+
+
+MAX_ROWS_FOUND
+
+
+CREATE OR REPLACE PROCEDURE ndf (n IN NUMBER)
+    AS
+      vname   employees.emp_name%TYPE;
+       vsalary employees.salary%TYPE;
+   BEGIN
+        SELECT emp_name, salary
+        INTO vname, vsalary
+       FROM employees
+        WHERE dept_id = n;
+ 
+       DBMS_OUTPUT.PUT_LINE('Name = ' || vname || ', Salary = ' || vsalary);
+ 
+   EXCEPTION
+      WHEN TOO_MANY_ROWS THEN
+        DBMS_OUTPUT.PUT_LINE('More than one employee found in dept = ' || n);
+ 
+      WHEN NO_DATA_FOUND THEN
+          DBMS_OUTPUT.PUT_LINE('No employee found in dept = ' || n);
+   END;
+   /
+
+
+
+--------------------OUTPUT---------------------------
+
+exec ndf(3)
+No employee found in dept = 3
+
+PL/SQL procedure successfully completed.
+
+exec ndf(101)
+More than one employee found in dept = 101
+
+PL/SQL procedure successfully completed.
+
+exec ndf(104)
+Name = Nancy, Salary = 4200
+
+PL/SQL procedure successfully completed.
+-----------------------------------------------------
+
+
+
+USER DEFINED EXCEPTION
+
+CREATE OR REPLACE PROCEDURE ude (
+    m1 IN NUMBER,
+    m2 IN NUMBER,
+    m3 IN NUMBER
+)
+AS
+    invalid_marks EXCEPTION;
+BEGIN
+    IF m1 < 0 OR m1 > 100 OR
+       m2 < 0 OR m2 > 100 OR
+       m3 < 0 OR m3 > 100 THEN
+
+        RAISE invalid_marks;
+
+    ELSIF m1 >= 50 AND m2 >= 50 AND m3 >= 0 THEN
+        DBMS_OUTPUT.PUT_LINE('Result = PASS');
+
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Result = FAIL');
+    END IF;
+
+EXCEPTION
+    WHEN invalid_marks THEN
+        DBMS_OUTPUT.PUT_LINE('Enter valid marks (0–100)');
+END;
+/
+
+
+--------------------OUTPUT---------------------------
+EXEC UDE(20, 30, 40)
+Result = FAIL
+
+PL/SQL procedure successfully completed.
+
+exec ude(60, 70,80)
+Result = PASS
+
+PL/SQL procedure successfully completed.
+-----------------------------------------------------
+
+
+
