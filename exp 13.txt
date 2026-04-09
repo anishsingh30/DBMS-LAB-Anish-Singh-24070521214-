@@ -1,0 +1,102 @@
+Practical 13
+
+select * from st_info;
+
+      ROLL NAME                                 SUB1       SUB2       SUB3       SUB4      TOTAL       PERC RESULT
+---------- ------------------------------ ---------- ---------- ---------- ---------- ---------- ---------- ----------
+         1 Amit                                   75         68         70         80
+         2 Rahul                                  60         65         58         72
+         3 Priya                                  82         78         85         80
+         4 Neha                                   55         60         62         58
+         5 Rohit                                  45         50         48         52
+         6 Anita                                  90         88         92         85
+         7 Karan                                  70         72         68         75
+         8 Sneha                                  65         60         67         63
+         9 Vikas                                  50         55         60         58
+        10 Pooja                                  78         82         80         76
+
+10 rows selected.
+
+CREATE OR REPLACE TRIGGER trig_upt
+after update on st_info
+BEGIN
+DBMS_OUTPUT.PUT_LINE('this is statement level trigger fired');
+END;
+/ 
+Output: Trigger created.
+
+update st_info set SUB1 = SUB1 - 10;
+Output: 10 rows updated.
+
+
+CREATE OR REPLACE TRIGGER trig_upt
+after update on st_info for each Row
+BEGIN
+DBMS_OUTPUT.PUT_LINE('this is Row level trigger fired');
+END;
+/ 
+Output: Trigger created.
+
+update st_info set SUB1 = SUB1 + 10;
+Output: 10 rows updated
+
+DROP TRIGGER trig_upt;
+Output: Trigger dropped.
+
+update st_info set SUB1 = SUB1 - 10 where sub1 > 80;
+Output: 2 rows updated.
+
+
+CREATE OR REPLACE TRIGGER trig_ins
+AFTER INSERT ON st_info
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Record inserted successfully');
+END;
+/
+Output: Trigger created.
+
+CREATE OR REPLACE TRIGGER C_Trig_ins
+BEFORE INSERT ON ST_INFO
+FOR EACH ROW
+BEGIN
+    IF :NEW.SUB1 < 0 OR :NEW.SUB1 > 100 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Marks not in range');
+    END IF;
+END;
+/
+Output: Trigger created.
+
+CREATE OR REPLACE TRIGGER C_Trig_ins
+BEFORE INSERT ON ST_INFO
+FOR EACH ROW
+BEGIN
+    IF :NEW.SUB2 < 0 OR :NEW.SUB2 > 100 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Marks not in range');
+    END IF;
+END;
+/
+Output: Trigger created.
+
+CREATE OR REPLACE TRIGGER C_Trig_ins
+BEFORE INSERT ON ST_INFO
+FOR EACH ROW
+BEGIN
+    IF :NEW.SUB3 < 0 OR :NEW.SUB3 > 100 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Marks not in range');
+    END IF;
+END;
+/
+Output: Trigger created.
+
+
+CREATE OR REPLACE TRIGGER C_Trig_ins
+BEFORE INSERT ON ST_INFO
+FOR EACH ROW
+BEGIN
+    IF :NEW.SUB4 < 0 OR :NEW.SUB4 > 100 THEN
+        RAISE_APPLICATION_ERROR(-20004, 'Marks not in range');
+    END IF;
+END;
+/
+Output: Trigger created.
+

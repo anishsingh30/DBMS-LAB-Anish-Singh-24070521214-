@@ -1,0 +1,81 @@
+Practical 14
+
+
+create table emp2 with feilds empno as int, name as char, categegory as int and write a
+trigger for insert or update on emp2 for new record in uppercase only using command like name=upper(name)
+create or replace trigger emp2_uppercase2
+before insert or update on emp2 
+for each row
+begin
+:new.name := upper(:new:name);
+end;
+/
+now add one more field salary to the table
+
+now write a trigger for insert or update the salary field
+1.category 1 salary should be more than 10000
+2.category 2 salary should be more than 20000
+3.category 3 salary should be more than 30000
+
+Practical 14
+
+
+CREATE TABLE emp2 (
+    empno INT,
+    name CHAR(50),
+    category INT
+);
+Output: Table created.
+
+CREATE OR REPLACE TRIGGER emp2_uppercase2
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+    :NEW.name := UPPER(:NEW.name);
+END;
+/
+Output: Trigger created.
+
+INSERT INTO emp2 VALUES (1, 'Sam', 1);
+INSERT INTO emp2 VALUES (2, 'John', 2);
+INSERT INTO emp2 VALUES (3, 'Alice', 1);
+INSERT INTO emp2 VALUES (4, 'Bob', 3);
+INSERT INTO emp2 VALUES (5, 'Emma', 2);
+INSERT INTO emp2 VALUES (6, 'David', 1);
+Output: 6 rows selected.
+
+ALTER TABLE emp2
+ADD salary NUMBER;
+Output: Table altered.
+
+CREATE OR REPLACE TRIGGER emp2_salary_check
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+BEGIN
+    IF :NEW.category = 1 AND :NEW.salary <= 10000 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Salary must be greater than 10000 for category 1');
+
+    ELSIF :NEW.category = 2 AND :NEW.salary <= 20000 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'Salary must be greater than 20000 for category 2');
+
+    ELSIF :NEW.category = 3 AND :NEW.salary <= 30000 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'Salary must be greater than 30000 for category 3');
+    END IF;
+END;
+/
+Output: Trigger created.
+
+ select * from emp2;
+
+     EMPNO NAME                                                 CATEGORY     SALARY
+---------- -------------------------------------------------- ---------- ----------
+         1 SAM                                                         1
+         2 JOHN                                                        2
+         3 ALICE                                                       1
+         4 BOB                                                         3
+         5 EMMA                                                        2
+         6 DAVID                                                       1
+
+6 rows selected.
+
+create and replace procedure to_mth

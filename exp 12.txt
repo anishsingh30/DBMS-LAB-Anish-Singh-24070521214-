@@ -1,0 +1,41 @@
+Practical 12
+
+CREATE OR REPLACE FUNCTION find_largest (
+    num1 NUMBER,
+    num2 NUMBER
+) RETURN NUMBER
+IS
+BEGIN
+    IF num1 > num2 THEN
+        RETURN num1;
+    ELSE
+        RETURN num2;
+    END IF;
+END;
+/
+Output: Function created.
+
+CREATE OR REPLACE FUNCTION number_of_employees 
+RETURN NUMBER 
+AS
+    total NUMBER := 0;
+BEGIN
+    SELECT COUNT(*) INTO total FROM emp;
+    RETURN total;
+END;
+/
+Output: Function created.
+
+
+CREATE OR REPLACE FUNCTION generate_email (
+    fname VARCHAR2,
+    lname VARCHAR2
+) RETURN VARCHAR2
+IS
+    email_id VARCHAR2(100);
+BEGIN
+    email_id := LOWER(fname || '.' || lname || '@company.com');
+    RETURN email_id;
+END;
+/
+Output: Function created.

@@ -1,0 +1,95 @@
+Practical 15
+
+create or replace procedure to_month
+as
+	v_month varchar2(10);
+begin
+	v_month:=to_char(sysdate, 'dy');
+	dbms_output.put_line('the current day is ' || v_month);
+end;
+/
+Output: Procedure created.
+
+exec to_month;
+Output: PL/SQL procedure successfully completed.
+
+UPDATE emp2 SET salary = 90000 WHERE empno = 1;
+UPDATE emp2 SET salary = 40000 WHERE empno = 2;
+UPDATE emp2 SET salary = 70000 WHERE empno = 3;
+UPDATE emp2 SET salary = 50000 WHERE empno = 4;
+UPDATE emp2 SET salary = 60000 WHERE empno = 5;
+UPDATE emp2 SET salary = 80000 WHERE empno = 6;
+Output: 6 rows updated.
+
+create or replace procedure max_min_salary
+as
+  v_max   emp2.salary%type;
+  v_min   emp2.salary%type;
+  v_upper emp2.salary%type;
+  v_lower emp2.salary%type;
+begin
+  select max(salary) into v_max from emp2;
+  select min(salary) into v_min from emp2;
+
+  v_upper := v_min * 10;
+  v_lower := v_max / 10;
+
+  dbms_output.put_line('maximum salary: ' || v_max);
+  dbms_output.put_line('minimum salary: ' || v_min);
+  dbms_output.put_line('upper value: ' || v_upper);
+  dbms_output.put_line('lower value: ' || v_lower);
+end;
+/
+Output: Procedure created.
+
+create or replace trigger emp2_salary_range
+before insert or update on emp2
+for each row
+declare
+  v_max   emp2.salary%type;
+  v_min   emp2.salary%type;
+  v_upper emp2.salary%type;
+  v_lower emp2.salary%type;
+begin
+  select max(salary), min(salary) into v_max, v_min from emp2;
+
+  v_upper := v_min * 10;
+  v_lower := v_max / 10;
+
+  if :new.salary < v_lower or :new.salary > v_upper then
+    raise_application_error(-20010, 
+      'Salary must be between ' || v_lower || ' and ' || v_upper);
+  end if;
+end;
+/
+Output: Trigger created.
+
+ select * from emp2;
+
+     EMPNO NAME                                                 CATEGORY     SALARY
+---------- -------------------------------------------------- ---------- ----------
+         1 SAM                                                         1      90000
+         2 JOHN                                                        2      40000
+         3 ALICE                                                       1      70000
+         4 BOB                                                         3      50000
+         5 EMMA                                                        2      60000
+         6 DAVID                                                       1      80000
+6 rows selected.
+
+ select * from emp2 order by empno asc;
+     EMPNO NAME                                                 CATEGORY     SALARY
+---------- -------------------------------------------------- ---------- ----------
+         1 SAM                                                         1      90000
+         2 JOHN                                                        2      40000
+         3 ALICE                                                       1      70000
+         4 BOB                                                         3      50000
+         5 EMMA                                                        2      60000
+         6 DAVID                                                       1      80000
+
+SET SERVEROUTPUT ON;
+exec max_min_salary
+maximum salary: 31000
+minimum salary: 11000
+upper value: 110000
+lower value: 3100
+Output: PL/SQL procedure successfully completed.
