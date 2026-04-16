@@ -1,0 +1,19 @@
+Create table Emp2_And As 
+Select * from Emp2 where 1=2;
+select * from Emp2;
+select * from Emp2_And;
+desc Emp2;
+desc Emp2_And;
+ALTER TABLE Emp2_And
+ADD (
+    New_Sal NUMBER(10,2),
+    Date_of_audit DATE
+);
+CREATE OR REPLACE TRIGGER EMP2_AND_TRI
+AFTER UPDATE OF SALARY ON EMP2
+FOR EACH ROW
+BEGIN
+INSERT INTO EMP2_AND (Empno,Name,Category,Salary,New_Sal,Date_of_audit)values
+(:Old.Empno,:Old.Name,:Old.Category,:Old.Salary,:New.Salary,Sysdate);
+End;
+/

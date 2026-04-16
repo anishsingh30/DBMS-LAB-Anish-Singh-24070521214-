@@ -1,0 +1,15 @@
+CREATE OR REPLACE TRIGGER SalaryTrig
+BEFORE INSERT OR UPDATE ON emp2
+FOR EACH ROW
+DECLARE
+  v_upper_sal_limit NUMBER(10,2);
+  v_lower_sal_limit NUMBER(10,2);
+BEGIN
+  SELECT MIN(salary) * 10 INTO v_upper_sal_limit FROM emp2;
+  SELECT MAX(salary) / 10 INTO v_lower_sal_limit FROM emp2;
+
+  IF :NEW.salary NOT BETWEEN v_lower_sal_limit AND v_upper_sal_limit THEN
+    RAISE_APPLICATION_ERROR(-20021, 'Salary out of allowed range');
+  END IF;
+END;
+/
